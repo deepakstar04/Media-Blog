@@ -1,0 +1,105 @@
+how to use  components 
+================================
+Components
+=================================
+import Button from "@/components/common/Button"
+import Input from "@/components/common/Input"
+import Modal from "@/components/common/Modal"
+
+<Button>Publish</Button>
+
+<Input label="Email" placeholder="Enter email" />
+
+<Modal isOpen={open} onClose={() => setOpen(false)} title="Confirm">
+  <p>Are you sure?</p>
+</Modal>
+=================================
+Layout
+==================================
+import { Outlet } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import Sidebar from "./Sidebar"
+
+export default function Layout() {
+  return (
+    <>
+      <Navbar />
+
+      <main className="max-w-content mx-auto px-4 pt-20 flex gap-8">
+        <div className="flex-1">
+          <Outlet />
+        </div>
+
+        <Sidebar />
+      </main>
+
+      <Footer />
+    </>
+  )
+};
+=================================
+<Store > 
+AuthStore Usage Example
+
+import useAuthStore from "@/store/authStore"
+
+const { user, login, logout, isAuthenticated } = useAuthStore()
+
+BlogStore Usage Example
+
+import useBlogStore from "@/store/blogStore"
+
+const {
+  blogs,
+  addBlog,
+  bookmarks,
+  toggleBookmark,
+} = useBlogStore()
+
+</Store>
+================================
+Services 
+
+Example Usage in Component
+
+import { useEffect } from "react"
+import { getBlogs } from "@/services/blog.service"
+import useBlogStore from "@/store/blogStore"
+
+export default function Feed() {
+  const { setBlogs, blogs } = useBlogStore()
+
+  useEffect(() => {
+    getBlogs()
+      .then((data) => setBlogs(data))
+      .catch((err) => console.error(err))
+  }, [])
+
+  return (
+    <div>
+      {blogs.map((blog) => (
+        <h2 key={blog.id}>{blog.title}</h2>
+      ))}
+    </div>
+  )
+}
+
+================================
+Utils
+Example Usage
+In a BlogCard component
+
+import { formatDate, truncateText } from "@/utils/helpers"
+
+<p>{formatDate(blog.createdAt)}</p>
+<p>{truncateText(blog.content)}</p>
+
+In Router or Navbar
+
+import { ROUTES } from "@/utils/constants"
+
+<Link to={ROUTES.WRITE}>Write</Link>
+================================
+
+================================

@@ -1,0 +1,5 @@
+.venv
+blog.db
+backend/blog.db
+frontend/.env
+frontend/public/vite.svg
